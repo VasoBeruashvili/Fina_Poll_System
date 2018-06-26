@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Fina_Poll_SystemModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="Fina_Poll_SystemModelStoreContainer">
+          <EntitySet Name="PollItems" EntityType="Fina_Poll_SystemModel.Store.PollItems" store:Type="Tables" Schema="Poll" />
+          <EntitySet Name="PollItemTypes" EntityType="Fina_Poll_SystemModel.Store.PollItemTypes" store:Type="Tables" Schema="Poll" />
+          <EntitySet Name="Polls" EntityType="Fina_Poll_SystemModel.Store.Polls" store:Type="Tables" Schema="Poll" />
+          <AssociationSet Name="FK_PollItems_Polls" Association="Fina_Poll_SystemModel.Store.FK_PollItems_Polls">
+            <End Role="Polls" EntitySet="Polls" />
+            <End Role="PollItems" EntitySet="PollItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PollItemTypes_PollItems" Association="Fina_Poll_SystemModel.Store.FK_PollItemTypes_PollItems">
+            <End Role="PollItems" EntitySet="PollItems" />
+            <End Role="PollItemTypes" EntitySet="PollItemTypes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="PollItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PollID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" />
+          <Property Name="OrderIndex" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="PollItemTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PollItemID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="OrderIndex" Type="int" />
+        </EntityType>
+        <EntityType Name="Polls">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TDate" Type="datetime" Nullable="false" />
+          <Property Name="WaitDays" Type="datetime" />
+          <Property Name="Version" Type="nvarchar" Nullable="false" MaxLength="500" />
+        </EntityType>
+        <Association Name="FK_PollItems_Polls">
+          <End Role="Polls" Type="Fina_Poll_SystemModel.Store.Polls" Multiplicity="1" />
+          <End Role="PollItems" Type="Fina_Poll_SystemModel.Store.PollItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Polls">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PollItems">
+              <PropertyRef Name="PollID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PollItemTypes_PollItems">
+          <End Role="PollItems" Type="Fina_Poll_SystemModel.Store.PollItems" Multiplicity="1" />
+          <End Role="PollItemTypes" Type="Fina_Poll_SystemModel.Store.PollItemTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PollItems">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PollItemTypes">
+              <PropertyRef Name="PollItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Fina_Poll_SystemModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Fina_Poll_SystemEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="PollItems" EntityType="Fina_Poll_SystemModel.PollItems" />
+          <EntitySet Name="PollItemTypes" EntityType="Fina_Poll_SystemModel.PollItemTypes" />
+          <EntitySet Name="Polls" EntityType="Fina_Poll_SystemModel.Polls" />
+          <AssociationSet Name="FK_PollItems_Polls" Association="Fina_Poll_SystemModel.FK_PollItems_Polls">
+            <End Role="Polls" EntitySet="Polls" />
+            <End Role="PollItems" EntitySet="PollItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PollItemTypes_PollItems" Association="Fina_Poll_SystemModel.FK_PollItemTypes_PollItems">
+            <End Role="PollItems" EntitySet="PollItems" />
+            <End Role="PollItemTypes" EntitySet="PollItemTypes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="PollItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="PollID" Nullable="false" />
+          <Property Type="String" Name="Name" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="OrderIndex" />
+          <Property Type="String" Name="Description" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Polls" Relationship="Fina_Poll_SystemModel.FK_PollItems_Polls" FromRole="PollItems" ToRole="Polls" />
+          <NavigationProperty Name="PollItemTypes" Relationship="Fina_Poll_SystemModel.FK_PollItemTypes_PollItems" FromRole="PollItems" ToRole="PollItemTypes" />
+        </EntityType>
+        <EntityType Name="PollItemTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="PollItemID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="OrderIndex" />
+          <NavigationProperty Name="PollItems" Relationship="Fina_Poll_SystemModel.FK_PollItemTypes_PollItems" FromRole="PollItemTypes" ToRole="PollItems" />
+        </EntityType>
+        <EntityType Name="Polls">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="TDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="WaitDays" Precision="3" />
+          <Property Type="String" Name="Version" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PollItems" Relationship="Fina_Poll_SystemModel.FK_PollItems_Polls" FromRole="Polls" ToRole="PollItems" />
+        </EntityType>
+        <Association Name="FK_PollItems_Polls">
+          <End Type="Fina_Poll_SystemModel.Polls" Role="Polls" Multiplicity="1" />
+          <End Type="Fina_Poll_SystemModel.PollItems" Role="PollItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Polls">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PollItems">
+              <PropertyRef Name="PollID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PollItemTypes_PollItems">
+          <End Type="Fina_Poll_SystemModel.PollItems" Role="PollItems" Multiplicity="1" />
+          <End Type="Fina_Poll_SystemModel.PollItemTypes" Role="PollItemTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PollItems">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PollItemTypes">
+              <PropertyRef Name="PollItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Fina_Poll_SystemModelStoreContainer" CdmEntityContainer="Fina_Poll_SystemEntities">
+          <EntitySetMapping Name="PollItems">
+            <EntityTypeMapping TypeName="Fina_Poll_SystemModel.PollItems">
+              <MappingFragment StoreEntitySet="PollItems">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PollID" ColumnName="PollID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PollItemTypes">
+            <EntityTypeMapping TypeName="Fina_Poll_SystemModel.PollItemTypes">
+              <MappingFragment StoreEntitySet="PollItemTypes">
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PollItemID" ColumnName="PollItemID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Polls">
+            <EntityTypeMapping TypeName="Fina_Poll_SystemModel.Polls">
+              <MappingFragment StoreEntitySet="Polls">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="WaitDays" ColumnName="WaitDays" />
+                <ScalarProperty Name="TDate" ColumnName="TDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
